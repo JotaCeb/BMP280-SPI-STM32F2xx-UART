@@ -504,7 +504,7 @@ I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr_ex.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_spi.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_uart.h)(0x5AF44502)
-F (../Src/stm32f2xx_it.c)(0x5AFB4A0A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I../Drivers/CMSIS/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o --omf_browse bmp280-spi-stm32f2xx-uart\stm32f2xx_it.crf --depend bmp280-spi-stm32f2xx-uart\stm32f2xx_it.d)
+F (../Src/stm32f2xx_it.c)(0x5AFB51C3)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I../Drivers/CMSIS/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o --omf_browse bmp280-spi-stm32f2xx-uart\stm32f2xx_it.crf --depend bmp280-spi-stm32f2xx-uart\stm32f2xx_it.d)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h)(0x5AF44501)
 I (../Inc/stm32f2xx_hal_conf.h)(0x5AFB4740)
 I (../Inc/main.h)(0x5AFB4741)
@@ -533,9 +533,9 @@ I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_pwr_ex.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_spi.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_uart.h)(0x5AF44502)
 I (../Inc/stm32f2xx_it.h)(0x5AFB473F)
-I (..\Drivers\BMP280\Inc\DriverBMP280_SPI.h)(0x5AFB4A0A)
-F (..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c)(0x5AFB4A0A)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I../Drivers/CMSIS/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.o --omf_browse bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.crf --depend bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.d)
-I (..\Drivers\BMP280\Inc\DriverBMP280_SPI.h)(0x5AFB4A0A)
+I (..\Drivers\BMP280\Inc\DriverBMP280_SPI.h)(0x5AFB6B40)
+F (..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c)(0x5AFB6B40)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I../Drivers/CMSIS/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.o --omf_browse bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.crf --depend bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.d)
+I (..\Drivers\BMP280\Inc\DriverBMP280_SPI.h)(0x5AFB6B40)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h)(0x5AF44501)
 I (../Inc/stm32f2xx_hal_conf.h)(0x5AFB4740)
 I (../Inc/main.h)(0x5AFB4741)

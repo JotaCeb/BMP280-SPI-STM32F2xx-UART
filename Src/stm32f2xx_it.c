@@ -199,7 +199,7 @@ void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
 	char CharInAux = 0;
-	CharInAux = huart1.Instance->DR;
+	CharInAux = huart1.Instance->DR;				//USART1->DR;
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */

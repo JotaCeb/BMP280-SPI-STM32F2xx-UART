@@ -28,28 +28,55 @@ Project File Date:  05/15/2018
 *** Using Compiler 'V5.06 update 1 (build 61)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'BMP280-SPI-STM32F2xx-UART'
 compiling DriverBMP280_SPI_English.c...
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(4): warning:  #1295-D: Deprecated declaration ReadTransmission - give arg types
+..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(25): warning:  #1295-D: Deprecated declaration ReadTransmission - give arg types
   void ReadTransmission();
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(5): warning:  #1295-D: Deprecated declaration WriteTransmission - give arg types
+..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(26): warning:  #1295-D: Deprecated declaration WriteTransmission - give arg types
   void WriteTransmission();
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(6): warning:  #1295-D: Deprecated declaration TimerProgramming - give arg types
-  void TimerProgramming();
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(10): warning:  #1-D: last line of file ends without a newline
+..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(32): warning:  #1-D: last line of file ends without a newline
   #endif
-..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(19): error:  #127: expected a statement
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(17): error:  #20: identifier "htim2" is undefined
+  	htim2.Init.Period = (CharInAux * 1000) + 1;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(18): warning:  #223-D: function "TIM_Base_SetConfig" declared implicitly
+  	TIM_Base_SetConfig(TIM2, &htim2.Init);
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(19): error:  #20: identifier "ANSWER" is undefined
+  	HAL_UART_Transmit(&huart1, &ANSWER[1][0], sizeof(ANSWER[1]), 10);
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(42): error:  #20: identifier "iR" is undefined
+  		iR = iW = 0;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(42): error:  #20: identifier "iW" is undefined
+  		iR = iW = 0;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(44): warning:  #940-D: missing return statement at end of non-void function "OptionLevelA"
   }
-..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c: 4 warnings, 1 error
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(61): warning:  #223-D: function "__HAL_TIM_DISABLE" declared implicitly
+  		    __HAL_TIM_DISABLE(&htim2);
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(61): error:  #20: identifier "htim2" is undefined
+  		    __HAL_TIM_DISABLE(&htim2);
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(65): warning:  #223-D: function "__HAL_TIM_ENABLE" declared implicitly
+  				__HAL_TIM_ENABLE(&htim2);break;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(71): error:  #127: expected a statement
+  		else if(CharInAux >= 0x31 || CharInAux <=0x32 || StaticCharIn1 == 1 || EntryNumber == 1){
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(74): warning:  #12-D: parsing restarts here after previous syntax error
+  }
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(74): error: At end of source:  #67: expected a "}"
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(6): warning:  #550-D: variable "StaticCharIn1" was set but never used
+  static char StaticCharIn1, CharIn2, CharIn3, CharIn4;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(6): warning:  #177-D: variable "CharIn2" was declared but never referenced
+  static char StaticCharIn1, CharIn2, CharIn3, CharIn4;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(6): warning:  #177-D: variable "CharIn3" was declared but never referenced
+  static char StaticCharIn1, CharIn2, CharIn3, CharIn4;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(6): warning:  #177-D: variable "CharIn4" was declared but never referenced
+  static char StaticCharIn1, CharIn2, CharIn3, CharIn4;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(7): warning:  #177-D: variable "FlagLevelB" was declared but never referenced
+  static char EntryNumber, FlagLevelB;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c: 13 warnings, 7 errors
 compiling stm32f2xx_it.c...
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(4): warning:  #1295-D: Deprecated declaration ReadTransmission - give arg types
+..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(25): warning:  #1295-D: Deprecated declaration ReadTransmission - give arg types
   void ReadTransmission();
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(5): warning:  #1295-D: Deprecated declaration WriteTransmission - give arg types
+..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(26): warning:  #1295-D: Deprecated declaration WriteTransmission - give arg types
   void WriteTransmission();
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(6): warning:  #1295-D: Deprecated declaration TimerProgramming - give arg types
-  void TimerProgramming();
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(10): warning:  #1-D: last line of file ends without a newline
+..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(32): warning:  #1-D: last line of file ends without a newline
   #endif
-../Src/stm32f2xx_it.c: 4 warnings, 0 errors
-"BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf" - 1 Error(s), 8 Warning(s).
+../Src/stm32f2xx_it.c: 3 warnings, 0 errors
+"BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf" - 7 Error(s), 16 Warning(s).
 
 <h2>Software Packages used:</h2>
 
