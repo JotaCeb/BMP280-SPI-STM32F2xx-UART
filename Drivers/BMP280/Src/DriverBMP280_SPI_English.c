@@ -1,35 +1,45 @@
-#include "DriverBMP280_SPI.h"
 #include "stm32f2xx_hal.h"
 #include "stdlib.h"
+#include "DriverBMP280_SPI.h"
 
 extern UART_HandleTypeDef huart1;
+extern TIM_HandleTypeDef htim2;
 extern SPI_HandleTypeDef hspi1;
 
-static char StaticCharIn1, CharIn2, CharIn3, CharIn4;
-static char EntryNumber, FlagLevelB;
-static uint8_t number[5];
-void ReadTransmission(){
+static char iX;
+static char EntryNumber, EntryNumberRW;
+static uint8_t number[5], MatrixTdata[3], MatrixRdata[3];
 
-}
-void WriteTransmission(){
+HAL_StatusTypeDef Comprobacion;
 
+void ReadTransmission(void){
+	int Reg2Read32Aux = 0;
+	Reg2Read32Aux = Hex2NumConversion();															//Hex conversion
+	Reg2Read32Aux |= (1<<6);																			//OC0 = 1 for simple read operation 
+	MatrixTdata[0] = Reg2Read32Aux; 
+	Comprobacion = HAL_SPI_TransmitReceive(&hspi1, &MatrixTdata[0], &MatrixRdata[0], SPI_DATASIZE_8BIT, 10);
+	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);
+	HAL_UART_Transmit(&huart1,&MatrixRdata[0], sizeof(MatrixRdata), 10);
 }
+//void WriteTransmission(){
+
+//}
 void TimerProgramming(char CharInAux){
 	CharInAux = atoi(&CharInAux);
 	htim2.Init.Period = (CharInAux * 1000) + 1;
 	TIM_Base_SetConfig(TIM2, &htim2.Init);
 	HAL_UART_Transmit(&huart1, &ANSWER[1][0], sizeof(ANSWER[1]), 10);
 }
-void UARTInterface(void){
+void UARTInterface(void){											//Show UART interface user
 	char i = 0;
 	while (i < 4){
-		HAL_UART_Transmit(&huart1, &INTERFACE0[i][0], sizeof(INTERFACE0[i]), 100);
+		HAL_UART_Transmit(&huart1, &INTERFACE_Level0[i][0], sizeof(INTERFACE_Level0[i]), 10);
 		i++;
 	}
 }
-char OptionLevelA (char CharInAux){
+void OptionLevelA (char CharInAux){						//Show first message after select an option (1), (2) or (3)
 	char i = 0;
-
+	CharInAux = Char2NumConversion (CharInAux);
 	if(CharInAux == 1 || CharInAux == 2){
 		HAL_UART_Transmit(&huart1, &INTERFACE_LevelA[CharInAux-1][0], sizeof(INTERFACE_LevelA[CharInAux-1]), 10);
 	}
@@ -41,14 +51,13 @@ char OptionLevelA (char CharInAux){
 		}
 	}
 	else{
-		iR = iW = 0;
+		iX = 0;
 	}
 }
-void GoToSPIDriverBMP280(char CharInAux){
-	char flagCarGoodAux = CharInAux;
-	flagCarGoodAux = ((flagCarGoodAux > 0x30) && (flagCarGoodAux < 0x39) && (flagCarGoodAux > 0x41) && (flagCarGoodAux < 0x49))? 1 : 0;
+void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to select any interface UART option)
+	char flagCarGoodAux = 0;												//For acceptable values
+	flagCarGoodAux = ((CharInAux >= '0') && (CharInAux <= '9') && (CharInAux >= 'A') && (CharInAux <= 'F'))? 1 : 0;
 	if(CharInAux == 0x1B || EntryNumber == 0){
-		StaticCharIn1 = CharInAux;
 		switch(CharInAux){
 			case 0x31:												//(1)
 				EntryNumber = 1;
@@ -71,39 +80,58 @@ void GoToSPIDriverBMP280(char CharInAux){
 		    __HAL_TIM_DISABLE(&htim2);
 				UARTInterface();break;
 		}
-	else if(CharInAux >= 0x31 || CharInAux <= 0x32 || EntryNumber == 1){
+	}
+	else if(CharInAux >= '1' && CharInAux <= '5' && EntryNumber == 1){
 		TimerProgramming(CharInAux);
 		EntryNumber = 0;
 	}
-	else if(EntryNumber == 2){								//(R) or (W)
+	else if(EntryNumber == 2){														//(R) or (W)
 		if(CharInAux == 'R' && iX == 0){										//Show message: "Introduce value"
-			FlagEntryNumber2 = CharInAux;
+			EntryNumberRW = CharInAux;
 			HAL_UART_Transmit(&huart1,&INTERFACE_Reading[0][0], sizeof(INTERFACE_Reading[0]), 10);
 			iX++;
 		}
-		else if(FlagEntryNumber2 == 'R' && iX == 1 && flagCarGoodAux == 1){
-			number[0] = USART1->DR;
+		else if(EntryNumberRW == 'R' && iX == 1 && flagCarGoodAux == 1 && CharInAux <= '3'){				//Catch first value
+			number[0] = CharInAux;
 			iX++;			
 		}
-		else if(FlagEntryNumber2 == 'R' && iX == 2 && flagCarGoodAux == 1){
-			number[1] = USART1->DR;
-			HAL_UART_Transmit(&huart1,&INTERFACE_Reading[0][0], sizeof(INTERFACE_Reading[0]), 10);
+		else if(EntryNumberRW == 'R' && iX == 2 && flagCarGoodAux == 1 ){														//Catch second value
+			number[1] = CharInAux;
+			ReadTransmission();
 			iX = 0;			
 		}
-		else if(FlagEntryNumber2 == 'R' && iX == 1){
-			sscanf((char*)&num, "%02x", &Reg2Read32);																		//hex conversion		
-			HAL_StatusTypeDef HAL_SPI_Receive(&hspi1, (uint8_t) Reg2Read32, SPI_DATASIZE_8BIT, 10);
-			HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);
-			
-			sprintf(num3, "%02x", ValRegRec8);
-			for (j=0;num3[j]!='\0';++j)	if(num3[j]>='a'&&num3[j]<='z')num3[j]=num3[j]-desp;	//Uppercase
-			HAL_UART_Transmit(&huart1, num3, 2, 10);
-			
-			iX++;			
-		}
-		else if(CharInAux == 'W' && iX == 0){
-			FlagEntryNumber2 = CharInAux;
-			iX++;
-		}
+//		else if(EntryNumberRW == 'W' && iX == 0){
+//			Reg2Read32Aux = Hex2NumConversion(number);																		//Hex conversion		
+//			HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, uint8_t *pTxData, uint8_t *pRxData, SPI_DATASIZE_8BIT, 10)
+//			HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);
+//			
+//			sprintf(num3, "%02x", ValRegRec8);
+//			for (j=0;num3[j]!='\0';++j)	if(num3[j]>='a'&&num3[j]<='z')num3[j]=num3[j]-desp;	//Uppercase
+//			HAL_UART_Transmit(&huart1, num3, 2, 10);
+//			
+//			iX++;			
+//		}
+//		else if(CharInAux == 'W' && iX == 0){
+//			EntryNumberRW = CharInAux;
+//			iX++;
+//		}
 	}
 }
+int Hex2NumConversion (void){
+	int Reg2Read32Aux = 0;
+	sscanf((char*)&number, "%02x", &Reg2Read32Aux);
+	return Reg2Read32Aux;
+}
+char Char2NumConversion (char CharInAux){
+	CharInAux = atoi(&CharInAux);
+	return CharInAux;
+}
+//int Num2HexConversion (void){
+//	int Reg2Read32Aux = 0;
+//	sprintf(num3, "%02x", ValRegRec8);
+//	return Reg2Read32Aux;
+//}
+
+//void UpperCaseConversion (void){
+//	
+//}

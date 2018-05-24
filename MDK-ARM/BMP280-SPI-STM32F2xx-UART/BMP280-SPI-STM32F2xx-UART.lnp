@@ -14,6 +14,7 @@
 "bmp280-spi-stm32f2xx-uart\stm32f2xx_hal_pwr_ex.o"
 "bmp280-spi-stm32f2xx-uart\stm32f2xx_hal_flash.o"
 "bmp280-spi-stm32f2xx-uart\stm32f2xx_hal_dma.o"
+"bmp280-spi-stm32f2xx-uart\stm32f2xx_hal_uart.o"
 "bmp280-spi-stm32f2xx-uart\system_stm32f2xx.o"
 "bmp280-spi-stm32f2xx-uart\stm32f2xx_hal_msp.o"
 "bmp280-spi-stm32f2xx-uart\main.o"
