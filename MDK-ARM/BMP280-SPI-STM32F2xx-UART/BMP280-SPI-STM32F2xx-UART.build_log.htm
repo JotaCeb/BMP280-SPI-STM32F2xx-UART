@@ -22,38 +22,20 @@ Dialog DLL:      TCM.DLL V1.14.6.0
  
 <h2>Project:</h2>
 C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\BMP280-SPI-STM32F2xx-UART.uvprojx
-Project File Date:  05/23/2018
+Project File Date:  05/25/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 1 (build 61)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'BMP280-SPI-STM32F2xx-UART'
-compiling stm32f2xx_it.c...
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(54): warning:  #1-D: last line of file ends without a newline
-  																
-../Src/stm32f2xx_it.c: 1 warning, 0 errors
 compiling DriverBMP280_SPI_English.c...
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(54): warning:  #1-D: last line of file ends without a newline
-  																
-..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c: 1 warning, 0 errors
-compiling main.c...
-..\Drivers\BMP280\Inc\DriverBMP280_SPI.h(54): warning:  #1-D: last line of file ends without a newline
-  																
-../Src/main.c: 1 warning, 0 errors
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(9): warning:  #550-D: variable "TestCharInAux" was set but never used
+  static char iX, TestCharInAux;
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c(11): warning:  #550-D: variable "MatrixTdata" was set but never used
+  static uint8_t number[5], MatrixTdata[2], MatrixRdata[20];
+..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c: 2 warnings, 0 errors
 linking...
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol ANSWER multiply defined (by stm32f2xx_it.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol ANSWER multiply defined (by driverbmp280_spi_english.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_Level0 multiply defined (by stm32f2xx_it.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_Level0 multiply defined (by driverbmp280_spi_english.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_LevelA multiply defined (by stm32f2xx_it.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_LevelA multiply defined (by driverbmp280_spi_english.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_Reading multiply defined (by stm32f2xx_it.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_Reading multiply defined (by driverbmp280_spi_english.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_Writting multiply defined (by stm32f2xx_it.o and main.o).
-BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf: Error: L6200E: Symbol INTERFACE_Writting multiply defined (by driverbmp280_spi_english.o and main.o).
-Not enough information to list image symbols.
-Not enough information to list the image map.
-Finished: 2 information, 0 warning and 10 error messages.
-"BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf" - 10 Error(s), 3 Warning(s).
+Program Size: Code=9196 RO-data=580 RW-data=2424 ZI-data=1264  
+"BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -71,8 +53,7 @@ Package Vendor: ARM
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:4.3.0
-Target not created.
-Build Time Elapsed:  00:00:13
+Build Time Elapsed:  00:00:09
 </pre>
 </body>
 </html>

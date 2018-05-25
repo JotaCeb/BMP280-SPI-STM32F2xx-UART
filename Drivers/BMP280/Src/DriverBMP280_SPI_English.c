@@ -6,18 +6,22 @@ extern UART_HandleTypeDef huart1;
 extern TIM_HandleTypeDef htim2;
 extern SPI_HandleTypeDef hspi1;
 
-static char iX;
+static char iX, TestCharInAux;
 static char EntryNumber, EntryNumberRW;
-static uint8_t number[5], MatrixTdata[3], MatrixRdata[3];
+static uint8_t number[5], MatrixTdata[2], MatrixRdata[20];
 
 HAL_StatusTypeDef Comprobacion;
 
 void ReadTransmission(void){
-	int Reg2Read32Aux = 0;
-	Reg2Read32Aux = Hex2NumConversion();															//Hex conversion
-	Reg2Read32Aux |= (1<<6);																			//OC0 = 1 for simple read operation 
-	MatrixTdata[0] = Reg2Read32Aux; 
-	Comprobacion = HAL_SPI_TransmitReceive(&hspi1, &MatrixTdata[0], &MatrixRdata[0], SPI_DATASIZE_8BIT, 10);
+	int i = 0;
+	uint8_t Reg2ReadAux8 = 0;
+	Reg2ReadAux8 = Hex2NumConversion();													//Hex conversion
+	MatrixTdata[0] = number[0];
+	MatrixTdata[1] = number[1];
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+	for(i = 0; i > 8000000; i++);
+	Comprobacion = HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 5, 10);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);
 	HAL_UART_Transmit(&huart1,&MatrixRdata[0], sizeof(MatrixRdata), 10);
 }
@@ -37,7 +41,7 @@ void UARTInterface(void){											//Show UART interface user
 		i++;
 	}
 }
-void OptionLevelA (char CharInAux){						//Show first message after select an option (1), (2) or (3)
+void OptionLevelA (char CharInAux){								//Show first message after select an option (1), (2) or (3)
 	char i = 0;
 	CharInAux = Char2NumConversion (CharInAux);
 	if(CharInAux == 1 || CharInAux == 2){
@@ -56,7 +60,8 @@ void OptionLevelA (char CharInAux){						//Show first message after select an op
 }
 void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to select any interface UART option)
 	char flagCarGoodAux = 0;												//For acceptable values
-	flagCarGoodAux = ((CharInAux >= '0') && (CharInAux <= '9') && (CharInAux >= 'A') && (CharInAux <= 'F'))? 1 : 0;
+	TestCharInAux = CharInAux;
+	flagCarGoodAux = ((CharInAux >= '0') && (CharInAux <= '9') || (CharInAux >= 'A') && (CharInAux <= 'F'))? 1 : 0;
 	if(CharInAux == 0x1B || EntryNumber == 0){
 		switch(CharInAux){
 			case 0x31:												//(1)
@@ -69,7 +74,7 @@ void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to 
 				EntryNumber = 0;
 				OptionLevelA (CharInAux);break;
 			case 0x1B:												//(ESC)
-				EntryNumber = 0;
+				EntryNumber = EntryNumberRW = iX = 0;
 		    __HAL_TIM_DISABLE(&htim2);
 				UARTInterface();break;
 			case 0x49:												//(I)
@@ -91,7 +96,7 @@ void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to 
 			HAL_UART_Transmit(&huart1,&INTERFACE_Reading[0][0], sizeof(INTERFACE_Reading[0]), 10);
 			iX++;
 		}
-		else if(EntryNumberRW == 'R' && iX == 1 && flagCarGoodAux == 1 && CharInAux <= '3'){				//Catch first value
+		else if(EntryNumberRW == 'R' && iX == 1 && flagCarGoodAux == 1){				//Catch first value
 			number[0] = CharInAux;
 			iX++;			
 		}

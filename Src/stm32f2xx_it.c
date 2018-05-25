@@ -36,7 +36,7 @@
 #include "stm32f2xx_it.h"
 
 /* USER CODE BEGIN 0 */
-#include "DriverBMP280_SPI.h"
+extern void UARTInterface(void);
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/

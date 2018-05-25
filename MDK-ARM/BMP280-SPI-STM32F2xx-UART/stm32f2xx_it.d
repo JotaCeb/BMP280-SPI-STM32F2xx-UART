@@ -30,4 +30,3 @@ bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o: ../Drivers/STM32F2xx_HAL_Driver/Inc/st
 bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o: ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim_ex.h
 bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o: ../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_uart.h
 bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o: ../Inc/stm32f2xx_it.h
-bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o: ..\Drivers\BMP280\Inc\DriverBMP280_SPI.h

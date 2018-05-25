@@ -5,7 +5,7 @@
 #ifndef __DRIVERBMP280_SPI_H
 #define __DRIVERBMP280_SPI_H
 
-#include "stm32f2xx_hal.h"
+#include "stdint.h"
 
 uint8_t INTERFACE_Level0[4][100] = {{"\r\n\r\nUART&SPI Interfaces for BMP280. (I) Initiation of acquisition, (S) Stop.\r\n"},
 																		{"(1)Acquisition frequency (1 to 5 seconds) of pressure and temperature.\r\n"},
@@ -29,12 +29,12 @@ uint8_t INTERFACE_Writting[3][100] = {{"\r\nWrite register to read: 0x..."},
 																			{"\r\nEnter the value you wish to overwrite in the register: 0x..."}};
 
 uint8_t ANSWER [11][100] = {{"\r\nThe entered register has the value of 0x"},
-																{"\r\nProgrammed timer\r\n"},
-																{"\r\nOverwritten value\r\n"},
-																{"X1:0x"}, {"   X2:0x"}, {"   Y1:0x"}, {"   Y2:0x"}, {"   Z1:0x"}, {"   Z2:0x"},{"\r\n"},
-																{"\r\nThe value of the entered register is 0:0x"}};
+														{"\r\nProgrammed timer\r\n"},
+														{"\r\nOverwritten value\r\n"},
+														{"X1:0x"}, {"   X2:0x"}, {"   Y1:0x"}, {"   Y2:0x"}, {"   Z1:0x"}, {"   Z2:0x"},{"\r\n"},
+														{"\r\nThe value of the entered register is 0:0x"}};
 
-/*Definición de las funciones de la librería ADXL345----------------------------*/
+/*Function definitions of BMP280 driver----------------------------------------------*/
 void GoToSPIDriverBMP280(char CharInAux);
 void ReadTransmission(void);
 //void WriteTransmission();
@@ -49,6 +49,3 @@ char Char2NumConversion (char CharInAux);
 void UpperCaseConversion (void);
 																
 #endif
-
-/*End file*/									
-																
