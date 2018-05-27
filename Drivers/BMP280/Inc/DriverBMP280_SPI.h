@@ -13,7 +13,7 @@ uint8_t INTERFACE_Level0[4][100] = {{"\r\n\r\nUART&SPI Interfaces for BMP280. (I
 																		{"(3)Information for the user.\r\n"}};
 
 uint8_t INTERFACE_LevelA[8][100] = {{"\r\nEnter an integer from 1 to 5: (1), (2), (3), (4), (5)."},
-																		{"\r\nRegister reading (R), register writting (W)."},
+																		{"\r\nRegister reading (R), register writing (W)."},
 																		{"\r\nIt is essential that the user knows how the BMP280 works."},
 																		{"\r\nDo not forget to write in uppercase to interact with the interface."},																					
 																		{"\r\nNo read and write errors are displayed due to enter incorrect values,"},
@@ -26,7 +26,7 @@ uint8_t INTERFACE_Timing[1][100] = {"\r\nProgrammed timer.\r\n"};
 uint8_t INTERFACE_Reading[2][50] = {{"\r\nWrite register to read: 0x..."},
 																		{"\r\nThe entered register has the value of 0x"}};
 																		
-uint8_t INTERFACE_Writting[3][100] = {{"\r\nWrite register to write: 0x..."},
+uint8_t INTERFACE_Writing[3][100] = {{"\r\nWrite register to write: 0x..."},
 																			{"\r\nWrite the value to overwrite: 0x..."},
 																			{"\r\nValue sent."}};
 
@@ -44,11 +44,9 @@ void TimerProgramming(char CharInAux);
 void UARTInterface(void);
 void OptionLevelA(char CharInAux);																					
 void GoToSPIDriverBMP280(char CharInAux);
-int Array2Uint8_tConver02(uint8_t *NumberAux);
-//int Array2Uint8_tConver04(uint8_t *NumberAux);														
+int Array2Uint8_tConver02(uint8_t *NumberAux);													
 void Uint8_t2ArrayConver(uint8_t CharInAux, uint8_t *ArrayCharInAux);
 int Char2HexConver(char CharInAux);
-																
-//void UpperCaseConversion(void);
+void UpperCaseConversion(uint8_t *NumberAux);
 																
 #endif

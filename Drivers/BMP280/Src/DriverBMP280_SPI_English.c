@@ -19,48 +19,39 @@ static uint8_t number[4], MatrixTdata[2], MatrixRdata[2], UartTdata[2];
 
 HAL_StatusTypeDef Comprobacion;
 
-void ReadTransmission(void){											//(2) Show the ridden register
-//	uint8_t Reg2ReadAux8 = 0;
-//	Reg2ReadAux8 = Array2Uint8_tConver02(&number[0]);																				//Hex conversion
-//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																		//SPI NSS low
-//	HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 4, 10);
-//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																			//SPI NSS low
-//	Uint8_t2ArrayConver(MatrixRdata[1], &UartTdata[0]);
-//	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);	//Show 0x
-//	HAL_UART_Transmit(&huart1,&UartTdata[0], sizeof(UartTdata), 10);												//Show data
-	
+void ReadTransmission(void){								//(2) Show the ridden register
 	uint8_t Reg2ReadAux8 = 0;
-	Reg2ReadAux8 = Array2Uint8_tConver02(&number[0]);												//Hex conversion
-	MatrixTdata[0] = number[0];
-	MatrixTdata[1] = number[1];
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-	Comprobacion = HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 5, 10);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);
-	HAL_UART_Transmit(&huart1,&MatrixRdata[0], sizeof(MatrixRdata), 10);
+	Reg2ReadAux8 = Array2Uint8_tConver02(&number[0]);																				//Hex conversion
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																		//SPI NSS low
+	HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 4, 10);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																			//SPI NSS low
+	Uint8_t2ArrayConver(MatrixRdata[1], &UartTdata[0]);
+	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);	//Show 0x
+	UpperCaseConversion (&UartTdata[0]);
+	HAL_UART_Transmit(&huart1,&UartTdata[0], sizeof(UartTdata), 10);												//Show data
 }
 void WriteValue(char iXAux){								//(2) (W)rite operation
-	MatrixTdata[0]= Array2Uint8_tConver02(&number[0]);																				//Hex conversion
+	MatrixTdata[0]= (Array2Uint8_tConver02(&number[0])) & 0x7F;																//Hex conversion & MSB to 0 for writing operation
 	MatrixTdata[1]= Array2Uint8_tConver02(&number[2]);																				//Hex conversion
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																			//SPI NSS low
-	HAL_SPI_TransmitReceive(&hspi1, &MatrixTdata[0], &MatrixRdata[0], 4, 10);//Comprobar que con 2 bytes vale
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																				//SPI NSS low
-	HAL_UART_Transmit(&huart1,&INTERFACE_Writting[2][0], sizeof(INTERFACE_Writting[2]), 10);	//Value sent
+	HAL_SPI_TransmitReceive(&hspi1, &MatrixTdata[0], &MatrixRdata[0], 2, 10);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																				//SPI NSS high
+	HAL_UART_Transmit(&huart1,&INTERFACE_Writing[2][0], sizeof(INTERFACE_Writing[2]), 10);		//Value sent
 }
-void TimerProgramming(char CharInAux){						//(1)
+void TimerProgramming(char CharInAux){			//(1)
 	CharInAux = atoi(&CharInAux);
 	htim2.Init.Period = (CharInAux * 1000) + 1;
 	TIM_Base_SetConfig(TIM2, &htim2.Init);
 	HAL_UART_Transmit(&huart1, &INTERFACE_Timing[0][0], sizeof(INTERFACE_Timing), 10);
 }
-void UARTInterface(void){													//Show UART interface user
+void UARTInterface(void){															//Show UART interface user
 	char i = 0;
 	while (i < 4){
 		HAL_UART_Transmit(&huart1, &INTERFACE_Level0[i][0], sizeof(INTERFACE_Level0[i]), 10);
 		i++;
 	}
 }
-void OptionLevelA (char CharInAux){								//Show first message after select an option (1), (2) or (3)
+void OptionLevelA (char CharInAux){										//Show first message after select an option (1), (2) or (3)
 	char i = 0;
 	CharInAux = Char2HexConver(CharInAux);
 	if(CharInAux == 1 || CharInAux == 2){
@@ -73,12 +64,9 @@ void OptionLevelA (char CharInAux){								//Show first message after select an 
 			i++;
 		}
 	}
-	else{
-		iX = 0;
-	}
 }
-void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to select any interface UART option)
-	char flagCarGoodAux = 0;												//For acceptable values
+void GoToSPIDriverBMP280(char CharInAux){												//Main driver function (Permit to select any interface UART option)
+	char flagCarGoodAux = 0;							//For acceptable values
 	flagCarGoodAux = (((CharInAux >= '0') && (CharInAux <= '9')) || ((CharInAux >= 'A') && (CharInAux <= 'F')))? 1 : 0;
 	if(CharInAux == 0x1B || EntryNumber == 0){
 		switch(CharInAux){
@@ -107,24 +95,24 @@ void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to 
 	else if(CharInAux >= '1' && CharInAux <= '5' && EntryNumber == 1){
 		TimerProgramming(CharInAux);
 	}
-	else if(EntryNumber == 2){														//(R) or (W)
-		if(CharInAux == 'R' && iX == 0){										//Show message: "Introduce value"
+	else if(EntryNumber == 2){																						//(R) or (W)
+		if(CharInAux == 'R' && iX == 0){																		//Show message: "Introduce value"
 			EntryNumberRW = CharInAux;
 			HAL_UART_Transmit(&huart1,&INTERFACE_Reading[0][0], sizeof(INTERFACE_Reading[0]), 10);
 			iX++;
 		}
-		else if(EntryNumberRW == 'R' && iX == 1 && flagCarGoodAux == 1){				//Catch first value
+		else if(EntryNumberRW == 'R' && iX == 1 && flagCarGoodAux == 1){		//Catch first value
 			number[0] = CharInAux;
 			iX++;			
 		}
-		else if(EntryNumberRW == 'R' && iX == 2 && flagCarGoodAux == 1 ){														//Catch second value
+		else if(EntryNumberRW == 'R' && iX == 2 && flagCarGoodAux == 1 ){		//Catch second value
 			number[1] = CharInAux;
 			ReadTransmission();
 			iX = 0;			
 		}
-		else if(CharInAux == 'W' && iX == 0){																		//Show message: "For Introduce register"
+		else if(CharInAux == 'W' && iX == 0){																												//Show message: "For Introduce register"
 			EntryNumberRW = CharInAux;
-			HAL_UART_Transmit(&huart1,&INTERFACE_Writting[0][0], sizeof(INTERFACE_Writting[0]), 10);
+			HAL_UART_Transmit(&huart1,&INTERFACE_Writing[0][0], sizeof(INTERFACE_Writing[0]), 10);
 			iX++;
 		}
 		else if(EntryNumberRW == 'W' && iX == 1 && flagCarGoodAux == 1){														//Catch first value
@@ -133,7 +121,7 @@ void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to 
 		}
 		else if(EntryNumberRW == 'W' && iX == 2 && flagCarGoodAux == 1 ){														//Catch second value
 			number[1] = CharInAux;
-			HAL_UART_Transmit(&huart1,&INTERFACE_Writting[1][0], sizeof(INTERFACE_Writting[1]), 10);	//Register to write 0x
+			HAL_UART_Transmit(&huart1,&INTERFACE_Writing[1][0], sizeof(INTERFACE_Writing[1]), 10);		//Register to write 0x
 			iX++;			
 		}
 		else if(EntryNumberRW == 'W' && iX == 3 && flagCarGoodAux == 1 ){														//Catch second value
@@ -147,22 +135,20 @@ void GoToSPIDriverBMP280(char CharInAux){					//Main driver function (Permit to 
 		}
 	}
 }
-int Array2Uint8_tConver02 (uint8_t *NumberAux){															//Conversion from array to uint8_t
+int Array2Uint8_tConver02 (uint8_t *NumberAux){														//Conversion from array to uint8_t
 	int Reg2Read32Aux = 0;
 	sscanf(NumberAux, "%02x", &Reg2Read32Aux);
 	return Reg2Read32Aux;
 }
-//int Array2Uint8_tConver04 (uint8_t *NumberAux){														//Conversion from array to uint8_t
-//	int Reg2Read32Aux = 0;
-//	sscanf(NumberAux, "%04x", &Reg2Read32Aux);
-//	return Reg2Read32Aux;
-//}
-void Uint8_t2ArrayConver(uint8_t CharInAux, uint8_t *ArrayCharInAux){				//Conversion from uint8_t to array
+void Uint8_t2ArrayConver(uint8_t CharInAux, uint8_t *ArrayCharInAux){			//Conversion from uint8_t to array
 	sprintf(ArrayCharInAux, "%02x", CharInAux);
 }
-int Char2HexConver(char CharInAux){																					//Conversion from char to int
+int Char2HexConver(char CharInAux){																				//Conversion from char to int
 	return (atoi(&CharInAux));
 }
-//void UpperCaseConversion (void){
-//	for (j=0;num3[j]!='\0';++j)	if(num3[j]>='a'&&num3[j]<='z')num3[j]=num3[j]-desp;	//Uppercase
-//}
+void UpperCaseConversion (uint8_t *NumberAux){														//Uppercase if there are some letter
+	uint8_t shift = 'a' - 'A';
+	if((*NumberAux>='a')&&(*NumberAux<='z')) *NumberAux=*NumberAux-shift;						//Uppercase
+	NumberAux++;
+	if((*NumberAux>='a')&&(*NumberAux<='z')) *NumberAux=*NumberAux-shift;						//Uppercase
+}
