@@ -20,14 +20,24 @@ static uint8_t number[4], MatrixTdata[2], MatrixRdata[2], UartTdata[2];
 HAL_StatusTypeDef Comprobacion;
 
 void ReadTransmission(void){											//(2) Show the ridden register
+//	uint8_t Reg2ReadAux8 = 0;
+//	Reg2ReadAux8 = Array2Uint8_tConver02(&number[0]);																				//Hex conversion
+//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																		//SPI NSS low
+//	HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 4, 10);
+//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																			//SPI NSS low
+//	Uint8_t2ArrayConver(MatrixRdata[1], &UartTdata[0]);
+//	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);	//Show 0x
+//	HAL_UART_Transmit(&huart1,&UartTdata[0], sizeof(UartTdata), 10);												//Show data
+	
 	uint8_t Reg2ReadAux8 = 0;
-	Reg2ReadAux8 = Array2Uint8_tConver02(&number[0]);																				//Hex conversion
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																		//SPI NSS low
-	HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 4, 10);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																			//SPI NSS low
-	Uint8_t2ArrayConver(MatrixRdata[1], &UartTdata[0]);
-	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);	//Show 0x
-	HAL_UART_Transmit(&huart1,&UartTdata[0], sizeof(UartTdata), 10);												//Show data
+	Reg2ReadAux8 = Array2Uint8_tConver02(&number[0]);												//Hex conversion
+	MatrixTdata[0] = number[0];
+	MatrixTdata[1] = number[1];
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+	Comprobacion = HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 5, 10);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);
+	HAL_UART_Transmit(&huart1,&MatrixRdata[0], sizeof(MatrixRdata), 10);
 }
 void WriteValue(char iXAux){								//(2) (W)rite operation
 	MatrixTdata[0]= Array2Uint8_tConver02(&number[0]);																				//Hex conversion
