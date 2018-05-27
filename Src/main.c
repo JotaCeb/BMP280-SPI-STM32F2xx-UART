@@ -64,7 +64,7 @@ static void MX_SPI1_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-	
+extern void UARTInterface(void);	
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -106,7 +106,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	UARTInterface();
   /* USER CODE END 2 */
-
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)

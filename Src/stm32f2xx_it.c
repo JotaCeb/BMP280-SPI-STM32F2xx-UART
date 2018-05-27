@@ -37,6 +37,7 @@
 
 /* USER CODE BEGIN 0 */
 extern void UARTInterface(void);
+extern void GoToSPIDriverBMP280(char CharInAux);
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
