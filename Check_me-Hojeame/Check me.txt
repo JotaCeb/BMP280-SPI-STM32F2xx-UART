@@ -1,0 +1,16 @@
+The software is programed in 4 wire configuration.
+		SPI1 GPIO Configuration    
+		PB3     ------> SPI1_SCK
+    		PB4     ------> SPI1_MISO
+    		PB5     ------> SPI1_MOSI 
+    		PA4     ------> SPI1_NSS
+The measurements are caught with normal mode, you will not need write "11" in mode[1:0] before acquisition.
+
+Steps for perform a quickly test
+1. Select oversampling temperature
+2. Select oversampling pressure
+3. Enter (I)
+
+The result will be the lectures of the values inside the 6 registers OxF7, OxF8, OxF9, OxFA, OxFB, OxFC:
+(P: 24 bits T: 24 bits)
+P: 0xF7[7:0]F8[7:0]F9[7:0]                 T: FA[7:0]FB[7:0]FC[7:0]

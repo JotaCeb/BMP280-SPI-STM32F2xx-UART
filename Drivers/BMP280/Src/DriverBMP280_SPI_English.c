@@ -13,24 +13,31 @@ extern UART_HandleTypeDef huart1;
 extern TIM_HandleTypeDef htim2;
 extern SPI_HandleTypeDef hspi1;
 
-char iX;
+static char iX;
 static char EntryNumber, EntryNumberRW;
-static uint8_t number[4], MatrixTdata[2], MatrixRdata[2], UartTdata[2];
+static uint8_t number[4], MatrixTdata[2], MatrixRdata[7];
 
 HAL_StatusTypeDef Comprobacion;
 
-void ReadTransmission(void){								//(2) Show the ridden register
-	uint8_t Reg2ReadAux8 = 0;
+void ResetChip(void){												//(3)	Reset chip OK
+	MatrixTdata[0] = 0xE0 & 0x7F;																														//Register E0 + Write operation
+	MatrixTdata[1] = 0xB6;
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																		//SPI NSS low
+	HAL_SPI_TransmitReceive(&hspi1, &MatrixTdata[0], &MatrixRdata[0], 2, 10);								//Reset => Write B6 in E0 register
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																			//SPI NSS high
+}
+void ReadTransmission(void){								//(2) Show the ridden register OK
+	uint8_t Reg2ReadAux8 = 0,  UartTdata[2];
 	Reg2ReadAux8 = Array2Uint8_tConver02(&number[0]);																				//Hex conversion
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																		//SPI NSS low
-	HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 4, 10);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																			//SPI NSS low
+	HAL_SPI_TransmitReceive(&hspi1, &Reg2ReadAux8, &MatrixRdata[0], 3, 10);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																			//SPI NSS high
 	Uint8_t2ArrayConver(MatrixRdata[1], &UartTdata[0]);
 	HAL_UART_Transmit(&huart1,&INTERFACE_Reading[1][0], sizeof(INTERFACE_Reading[1]), 10);	//Show 0x
 	UpperCaseConversion (&UartTdata[0]);
-	HAL_UART_Transmit(&huart1,&UartTdata[0], sizeof(UartTdata), 10);												//Show data
+	HAL_UART_Transmit(&huart1,&UartTdata[0], 2, 10);												//Show data
 }
-void WriteValue(char iXAux){								//(2) (W)rite operation
+void WriteValue(char iXAux){								//(2) (W)rite operation OK
 	MatrixTdata[0]= (Array2Uint8_tConver02(&number[0])) & 0x7F;																//Hex conversion & MSB to 0 for writing operation
 	MatrixTdata[1]= Array2Uint8_tConver02(&number[2]);																				//Hex conversion
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																			//SPI NSS low
@@ -46,19 +53,23 @@ void TimerProgramming(char CharInAux){			//(1)
 }
 void UARTInterface(void){															//Show UART interface user
 	char i = 0;
-	while (i < 4){
+	while (i < 5){
 		HAL_UART_Transmit(&huart1, &INTERFACE_Level0[i][0], sizeof(INTERFACE_Level0[i]), 10);
 		i++;
 	}
 }
-void OptionLevelA (char CharInAux){										//Show first message after select an option (1), (2) or (3)
+void OptionLevelA (char CharInAux){										//Show first message after select an option (1), (2), (3) or (4)
 	char i = 0;
 	CharInAux = Char2HexConver(CharInAux);
 	if(CharInAux == 1 || CharInAux == 2){
 		HAL_UART_Transmit(&huart1, &INTERFACE_LevelA[CharInAux-1][0], sizeof(INTERFACE_LevelA[CharInAux-1]), 10);
 	}
 	else if(CharInAux == 3){
-		i=2;
+		ResetChip();
+		HAL_UART_Transmit(&huart1, &INTERFACE_LevelA[CharInAux-1][0], sizeof(INTERFACE_LevelA[CharInAux-1]), 10);
+	}
+	else if(CharInAux == 4){
+		i=3;
 		while (i < 8){
 			HAL_UART_Transmit(&huart1, &INTERFACE_LevelA[i][0], sizeof(INTERFACE_LevelA[i]), 10);
 			i++;
@@ -76,20 +87,19 @@ void GoToSPIDriverBMP280(char CharInAux){												//Main driver function (Per
 			case 0x32:												//(2)->(R) or (W)
 				EntryNumber = 2;
 				OptionLevelA (CharInAux);break;
-			case 0x33:												//(3)
-				EntryNumber = 0;
+			case 0x33:												//(3) Reset
+				EntryNumber = 3;
+				OptionLevelA (CharInAux);break;
+			case 0x34:												//(4) Info
+				EntryNumber = 4;
 				OptionLevelA (CharInAux);break;
 			case 0x1B:												//(ESC)
 				EntryNumber = EntryNumberRW = iX = 0;
 		    __HAL_TIM_DISABLE(&htim2);
 				UARTInterface();break;
 			case 0x49:												//(I)
-				EntryNumber = 16;
+				EntryNumber = 5;
 				__HAL_TIM_ENABLE(&htim2);break;
-			case 0x53:												//(S)
-				EntryNumber = 0;
-		    __HAL_TIM_DISABLE(&htim2);
-				UARTInterface();break;
 		}
 	}
 	else if(CharInAux >= '1' && CharInAux <= '5' && EntryNumber == 1){
@@ -135,7 +145,23 @@ void GoToSPIDriverBMP280(char CharInAux){												//Main driver function (Per
 		}
 	}
 }
-int Array2Uint8_tConver02 (uint8_t *NumberAux){														//Conversion from array to uint8_t
+void ReadTP(void){
+	uint8_t Reg2Read8Aux = 0xF7, j = 0, i = 0, k = 0, t = 0,  UartTdata[12];
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);																					//SPI NSS low
+	HAL_SPI_TransmitReceive(&hspi1, &Reg2Read8Aux, &MatrixRdata[0], 7, 10);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);																						//SPI NSS high
+	while(i < 6){
+		Uint8_t2ArrayConver(MatrixRdata[(i+1)], &UartTdata[j]);										
+		i++; j++; j++;
+	}
+	UpperCaseConversion12 (&UartTdata[0]);																													//Uppercase if there are some letter
+	while(k < 12){
+		HAL_UART_Transmit(&huart1,&INTERFACE_PT[t][0], sizeof(INTERFACE_PT[t]), 10);									//Show P: 0x
+		HAL_UART_Transmit(&huart1,&UartTdata[k], 2, 10);																							//Show pressure data
+		t++; k++; k++;
+	}
+}
+int Array2Uint8_tConver02(uint8_t *NumberAux){														//Conversion from array to uint8_t
 	int Reg2Read32Aux = 0;
 	sscanf(NumberAux, "%02x", &Reg2Read32Aux);
 	return Reg2Read32Aux;
@@ -146,9 +172,17 @@ void Uint8_t2ArrayConver(uint8_t CharInAux, uint8_t *ArrayCharInAux){			//Conver
 int Char2HexConver(char CharInAux){																				//Conversion from char to int
 	return (atoi(&CharInAux));
 }
-void UpperCaseConversion (uint8_t *NumberAux){														//Uppercase if there are some letter
+void UpperCaseConversion(uint8_t *NumberAux){														//Uppercase if there are some letter
 	uint8_t shift = 'a' - 'A';
 	if((*NumberAux>='a')&&(*NumberAux<='z')) *NumberAux=*NumberAux-shift;						//Uppercase
 	NumberAux++;
 	if((*NumberAux>='a')&&(*NumberAux<='z')) *NumberAux=*NumberAux-shift;						//Uppercase
+}
+void UpperCaseConversion12(uint8_t *NumberAux){														//Uppercase if there are some letter
+	uint8_t shift = 'a' - 'A', i = 0;
+	while(i < 12){
+		if((*NumberAux>='a')&&(*NumberAux<='z')) *NumberAux=*NumberAux-shift;					//Uppercase
+		NumberAux++;
+		i++;
+	}
 }
