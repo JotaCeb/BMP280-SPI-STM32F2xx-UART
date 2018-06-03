@@ -2,4 +2,5 @@
 UART and SPI interfaces for BMP280 chip
 
 This project idea is to create one SPI interface between BMP280 and the program and one USART interface between program and the user.
-Actually, this project is on built.
+
+There are some functions not avaible of BMP280 in this project.
