@@ -537,9 +537,9 @@
           <GroupName>BMP280_Driver</GroupName>
           <Files>
             <File>
-              <FileName>DriverBMP280_SPI_English.c</FileName>
+              <FileName>DriverBMP280_SPI.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c</FilePath>
+              <FilePath>..\Drivers\BMP280\Src\DriverBMP280_SPI.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -194,27 +194,17 @@
         <Ww>
           <count>0</count>
           <WinNumber>2</WinNumber>
-          <ItemText>\\BMP280_SPI_STM32F2xx_UART\../Drivers/BMP280/Src/DriverBMP280_SPI_English.c\number</ItemText>
+          <ItemText>UartTdata</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>2</WinNumber>
-          <ItemText>\\BMP280_SPI_STM32F2xx_UART\../Drivers/BMP280/Src/DriverBMP280_SPI_English.c\MatrixTdata</ItemText>
+          <ItemText>MatrixRdataAux</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>\\BMP280_SPI_STM32F2xx_UART\../Drivers/BMP280/Src/DriverBMP280_SPI_English.c\MatrixRdata</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>UartTdata</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>MatrixRdataAux</ItemText>
+          <ItemText>MatrixRdata</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>
@@ -540,11 +530,11 @@
       <GroupNumber>5</GroupNumber>
       <FileNumber>21</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c</PathWithFileName>
-      <FilenameWithoutPath>DriverBMP280_SPI_English.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BMP280\Src\DriverBMP280_SPI.c</PathWithFileName>
+      <FilenameWithoutPath>DriverBMP280_SPI.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

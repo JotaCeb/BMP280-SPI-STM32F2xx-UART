@@ -19,7 +19,7 @@
 "bmp280-spi-stm32f2xx-uart\stm32f2xx_hal_msp.o"
 "bmp280-spi-stm32f2xx-uart\main.o"
 "bmp280-spi-stm32f2xx-uart\stm32f2xx_it.o"
-"bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.o"
+"bmp280-spi-stm32f2xx-uart\driverbmp280_spi.o"
 --library_type=microlib --strict --scatter "BMP280-SPI-STM32F2xx-UART\BMP280-SPI-STM32F2xx-UART.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

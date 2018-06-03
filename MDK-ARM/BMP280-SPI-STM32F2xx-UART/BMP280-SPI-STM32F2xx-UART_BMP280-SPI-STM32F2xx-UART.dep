@@ -510,7 +510,7 @@ I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_spi.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim_ex.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_uart.h)(0x5AF44502)
-F (../Src/main.c)(0x5B0C7BB9)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\main.o --omf_browse bmp280-spi-stm32f2xx-uart\main.crf --depend bmp280-spi-stm32f2xx-uart\main.d)
+F (../Src/main.c)(0x5B140705)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\main.o --omf_browse bmp280-spi-stm32f2xx-uart\main.crf --depend bmp280-spi-stm32f2xx-uart\main.d)
 I (../Inc/main.h)(0x5B083205)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h)(0x5AF44501)
 I (../Inc/stm32f2xx_hal_conf.h)(0x5B084B63)
@@ -571,7 +571,7 @@ I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim_ex.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_uart.h)(0x5AF44502)
 I (../Inc/stm32f2xx_it.h)(0x5B084B63)
-F (..\Drivers\BMP280\Src\DriverBMP280_SPI_English.c)(0x5B12EFB5)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.o --omf_browse bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.crf --depend bmp280-spi-stm32f2xx-uart\driverbmp280_spi_english.d)
+F (..\Drivers\BMP280\Src\DriverBMP280_SPI.c)(0x5B141422)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc -I../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Include -I../Drivers/CMSIS/Device/ST/STM32F2xx/Include -I..\Drivers\BMP280\Inc-I C:\Users\Jota16\Dropbox\Proyecto_actual\BMP280-SPI-STM32F2xx-UART\MDK-ARM\RTE-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F2xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F205xx -DUSE_HAL_DRIVER -DSTM32F205xx-o bmp280-spi-stm32f2xx-uart\driverbmp280_spi.o --omf_browse bmp280-spi-stm32f2xx-uart\driverbmp280_spi.crf --depend bmp280-spi-stm32f2xx-uart\driverbmp280_spi.d)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal.h)(0x5AF44501)
 I (../Inc/stm32f2xx_hal_conf.h)(0x5B084B63)
 I (../Inc/main.h)(0x5B083205)
@@ -602,4 +602,4 @@ I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_tim_ex.h)(0x5AF44502)
 I (../Drivers/STM32F2xx_HAL_Driver/Inc/stm32f2xx_hal_uart.h)(0x5AF44502)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x55DB8DE8)
-I (..\Drivers\BMP280\Inc\DriverBMP280_SPI.h)(0x5B12EA66)
+I (..\Drivers\BMP280\Inc\DriverBMP280_SPI_English.h)(0x5B12EA66)

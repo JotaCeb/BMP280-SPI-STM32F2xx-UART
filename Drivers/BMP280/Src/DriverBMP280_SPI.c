@@ -7,7 +7,8 @@
 */
 #include "stm32f2xx_hal.h"
 #include "stdlib.h"
-#include "DriverBMP280_SPI.h"
+#include "DriverBMP280_SPI_English.h"
+//#include "DriverBMP280_SPI_Espanol.h"
 
 extern UART_HandleTypeDef huart1;
 extern TIM_HandleTypeDef htim2;
@@ -58,7 +59,7 @@ void UARTInterface(void){															//Show UART interface user
 		i++;
 	}
 }
-void OptionLevelA (char CharInAux){										//Show first message after select an option (1), (2), (3) or (4)
+void OptionLevelA(char CharInAux){										//Show first message after select an option (1), (2), (3) or (4)
 	char i = 0;
 	CharInAux = Char2HexConver(CharInAux);
 	if(CharInAux == 1 || CharInAux == 2){
@@ -154,10 +155,10 @@ void ReadTP(void){
 		Uint8_t2ArrayConver(MatrixRdata[(i+1)], &UartTdata[j]);										
 		i++; j++; j++;
 	}
-	UpperCaseConversion12 (&UartTdata[0]);																													//Uppercase if there are some letter
+	UpperCaseConversion12 (&UartTdata[0]);																												//Uppercase if there are some letter
 	while(k < 12){
-		HAL_UART_Transmit(&huart1,&INTERFACE_PT[t][0], sizeof(INTERFACE_PT[t]), 10);									//Show P: 0x
-		HAL_UART_Transmit(&huart1,&UartTdata[k], 2, 10);																							//Show pressure data
+		HAL_UART_Transmit(&huart1,&INTERFACE_PT[t][0], sizeof(INTERFACE_PT[t]), 10);								//Show P: 0x
+		HAL_UART_Transmit(&huart1,&UartTdata[k], 2, 10);																						//Show pressure data
 		t++; k++; k++;
 	}
 }
@@ -172,7 +173,7 @@ void Uint8_t2ArrayConver(uint8_t CharInAux, uint8_t *ArrayCharInAux){			//Conver
 int Char2HexConver(char CharInAux){																				//Conversion from char to int
 	return (atoi(&CharInAux));
 }
-void UpperCaseConversion(uint8_t *NumberAux){														//Uppercase if there are some letter
+void UpperCaseConversion(uint8_t *NumberAux){															//Uppercase if there are some letter
 	uint8_t shift = 'a' - 'A';
 	if((*NumberAux>='a')&&(*NumberAux<='z')) *NumberAux=*NumberAux-shift;						//Uppercase
 	NumberAux++;
